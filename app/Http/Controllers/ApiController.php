@@ -122,42 +122,6 @@ class ApiController extends Controller
         }
     }
 
-    public function updateregister(Request $req)
-    {
-        $input = $req->all();
-        $validator = Validator::make($input, [
-            'display_picture' => 'required',
-            // 'user_name' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            // 'gender' => 'required',
-            // 'email' => 'required',
-            // 'dob' => 'required',
-            'phone' => 'required',
-            // 'status' => 'required',
-            // 'is_active' => 'required',
-            // 'user_type' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'error' => $validator->errors()]);
-        }
-
-        if ($req->file('display_picture')) {
-            unset($input['display_picture']);
-            $input += ['display_picture' => $this->updateprofile($req, 'display_picture', 'profileimage')];
-        }
-
-        unset($input['_token']);
-        if (@$input['id']) {
-            $userupdate = User::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'User Updated Successfully.', 'data' => User::where('id', $input['id'])->first()]);
-        } else {
-            $userupdate = User::create($input);
-            return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
-        }
-    }
-
     public function changepassword(Request $request)
     {
         try {
@@ -179,39 +143,14 @@ class ApiController extends Controller
         }
     }
 
-
-    public function userupdate(Request $req)
-    {
-        $input = $req->all();
-        $validator = Validator::make($input, [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
-            'designation' => 'required',
-            'user_type' => 'required',
-            'password' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'error' => $validator->errors()]);
-        }
-        unset($input['_token']);
-        if (@$input['id']) {
-            $userupdate = User::where("id", $input['id'])->update($input);
-            return response()->json(['success' => true, 'msg' => 'User Updated Successfully.']);
-        } else {
-            $userupdate = User::create($input);
-            return response()->json(['success' => true, 'msg' => 'User Created Successfully']);
-        }
-    }
-
     public function phoneotp(Request $req)
     {
         $otp = User::where('id', $req->user_id)->where('otp', $req->otp)->first();
         if (!empty($otp)) {
+            User::where('id', $req->user_id)->update(['is_active' => 1]);
             return response()->json(['success' => true, 'msg' => 'Success']);
         }
-        return response()->json(['success' => false, 'msg' => 'Please enter valid otp code']);
+        return response()->json(['success' => false, 'msg' => 'Please Enter Valid Otp Code']);
     }
 
     public function generateotp(Request $req)
@@ -219,30 +158,6 @@ class ApiController extends Controller
         $otp = rand(1000, 9999);
         $user = User::where('id', $req->user_id)->update(['otp' => $otp, 'phone' => $req->phone]);
         return response()->json(['success' => true, 'msg' => 'OTP Genrated', 'data' => $otp]);
-    }
-
-    public function vendordashboard()
-    {
-        $booking = Bookings::count();
-        $currentDateTime = Carbon::now();
-        $upcomingbookings = Bookings::where('datetime', '>', $currentDateTime)->count();
-        $pastBooking =  Bookings::where('datetime', '<', $currentDateTime)->get();
-        $pastTime = 0;
-        if ($pastBooking->count() > 0) {
-            foreach ($pastBooking as $key => $pb) {
-                $pastTime += $pb->duration;
-            }
-        }
-
-        $duration = $pastTime;
-        $hours    = (int)($duration / 60);
-        $minutes  = $duration - ($hours * 60);
-
-        date_default_timezone_set('UTC');
-        $date = new DateTime($hours . ":" . $minutes);
-        //  echo $date->format('H:i:s');
-        // dd($date->format('H:i:s'));
-        return response()->json(['success' => true, 'msg' => 'Dashboard Data:', 'booking' => $booking, 'upcomingbookings' => $upcomingbookings, 'totaltime' => $date->format('H:i:s')]);
     }
 
     public function searchUser(Request $req)
@@ -271,23 +186,5 @@ class ApiController extends Controller
         ];
 
         return response()->json(['success' => true, 'data' => $searchResults]);
-    }
-
-    public function searchLoc(Request $req)
-    {
-        $input = $req->all();
-        $ser = $input['search'];
-
-        $rentalResults = Rentals::with('User')->where('locations', 'LIKE', "%$ser%")->get();
-        $tourResults = Tours::where('loc', 'LIKE', "%$ser%")->get();
-
-        // $searchLoc['rentals'] = $rentalResults;
-        // $searchLoc['tours'] = $tourResults;
-
-        $searchLoc = [
-            'searchLoc' => array_merge($rentalResults->toArray(), $tourResults->toArray()),
-        ];
-
-        return $searchLoc;
     }
 }
