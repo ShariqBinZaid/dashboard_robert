@@ -76,11 +76,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('user/client/lists', 'list')->name('user.client.list');
     });
 
-
     // ************************ Subscriptions  ************************ //
     Route::resource('subscriptions', SubscriptionsController::class);
     Route::controller(SubscriptionsController::class)->group(function () {
-        Route::get('user/subscriptions/lists', 'list')->name('user.subscriptions.list');
+        Route::get('user/subscriptions/lists', 'list')->name('subscriptions.list');
     });
 
 

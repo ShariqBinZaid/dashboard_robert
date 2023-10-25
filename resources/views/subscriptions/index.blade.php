@@ -146,7 +146,6 @@
                                 <th>Name</th>
                                 <th>Price</th>
                                 <th>Descriptions</th>
-                                <th>Is Active</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

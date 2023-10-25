@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
-
+use App\Http\Controllers\SubscriptionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +33,10 @@ Route::middleware('auth:api')->group(function () {
         Route::post('searchUser', 'searchUser')->name('user.searchUser');
         Route::post('search', 'search')->name('user.search');
         Route::post('searchTour', 'searchTour')->name('user.searchTour');
+    });
+
+    Route::controller(SubscriptionsController::class)->group(function () {
+        Route::post('subscriptions', 'store')->name('user.subscriptions');
+        Route::get('getsubscriptions', 'getsubscriptions')->name('user.getsubscriptions');
     });
 });
