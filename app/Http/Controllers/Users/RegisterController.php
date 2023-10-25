@@ -115,6 +115,7 @@ class RegisterController extends Controller
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
     }
+
     public function updateprofile(Request $request, $file)
     {
         $p = $request->input();
@@ -171,6 +172,7 @@ class RegisterController extends Controller
         $user = User::with('role')->where('user_type', 'user')->get();
         return response()->json($user);
     }
+
     public function usercurrent()
     {
         try {

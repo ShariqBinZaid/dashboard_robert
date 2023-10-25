@@ -172,7 +172,7 @@
     <div id="preloader">
         <div id="statusloader">
 
-            <img src="{{ asset('storage/preloader/preloader.gif') }}" alt="" style="width: 53px;opacity:0.8">
+            <img src="{{ asset('storage/preloader/preloader.gif') }}" alt="" style="width: 100px;opacity:0.8">
             {{-- <div class="spinner"></div> --}}
         </div>
     </div>

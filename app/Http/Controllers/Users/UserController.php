@@ -45,8 +45,8 @@ class UserController extends Controller
         $roles = @$input['roles'];
 
         $validator = Validator::make($input, [
+            // 'name' => 'required',
             'email' => 'required',
-            'name' => 'required',
             'email' => 'email|required|unique:users,email,' . $input['id'],
         ]);
 

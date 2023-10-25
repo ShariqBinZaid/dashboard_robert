@@ -64,14 +64,14 @@
                                     <div class="separator"></div>
                                     <div id="kt_user_view_details" class="collapse show">
                                         <div class="pb-5 fs-6">
-                                            <div class="fw-bold mt-5">Username</div>
-                                            <div class="text-gray-600 text-capitalize">{{ $user->user_name }}</div>
+                                            <div class="fw-bold mt-5">Name</div>
+                                            <div class="text-gray-600 text-capitalize">{{ $user->name }}</div>
                                             <div class="fw-bold mt-5">Email</div>
                                             <div class="text-gray-600 text-capitalize">{{ $user->email }}</div>
                                             <div class="fw-bold mt-5">Gender</div>
                                             <div class="text-gray-600 text-capitalize">{{ $user->gender }}</div>
-                                            <div class="fw-bold mt-5">Address</div>
-                                            <div class="text-gray-600 text-capitalize">{{ $user->address }}</div>
+                                            <div class="fw-bold mt-5">Date Of Birth</div>
+                                            <div class="text-gray-600 text-capitalize">{{ $user->dob }}</div>
                                             <div class="fw-bold mt-5">Contact Number</div>
                                             <div class="text-gray-600 text-capitalize">{{ $user->phone }}</div>
                                             {{-- <div class="fw-bold mt-5">Country</div>
@@ -146,11 +146,11 @@
                                                 </div>
 
                                                 <div class="mb-10">
-                                                    <label for="first_name" class="form-label">User Name</label>
-                                                    <input class="form-control" placeholder="First Name" name="user_name"
-                                                        type="text" id="user_name" value="{{ @$user->user_name }}">
+                                                    <label for="Name" class="form-label">Name</label>
+                                                    <input class="form-control" placeholder="Name" name="Name"
+                                                        type="text" id="Name" value="{{ @$user->name }}">
                                                 </div>
-
+                                                {{--
                                                 <div class="mb-10">
                                                     <label for="first_name" class="form-label">First Name</label>
                                                     <input class="form-control" placeholder="First Name"
@@ -162,7 +162,7 @@
                                                     <label for="last_name" class="form-label">Last Name</label>
                                                     <input class="form-control" placeholder="Last Name" name="last_name"
                                                         type="text" id="last_name" value="{{ $user->last_name }}">
-                                                </div>
+                                                </div> --}}
 
                                                 <div class="mb-10">
                                                     <label for="email" class="form-label">Email</label>
@@ -171,9 +171,10 @@
                                                 </div>
 
                                                 <div class="mb-10">
-                                                    <label for="email" class="form-label">Address</label>
-                                                    <input class="form-control" placeholder="Address" name="address"
-                                                        type="text" id="address" value="{{ $user->address }}">
+                                                    <label for="dob" class="form-label">Date Of Birth</label>
+                                                    <input class="form-control" placeholder="Date Of Birth"
+                                                        name="dob" type="text" id="dob"
+                                                        value="{{ $user->dob }}">
                                                 </div>
 
                                                 <div class="mb-10">
