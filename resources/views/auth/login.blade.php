@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
+            <div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
                 <div style="background-color:#f1416c47 !important;" class="bg-body d-flex flex-center rounded-4 w-md-600px p-10">
                     <div class="w-md-400px">
 
@@ -132,7 +132,7 @@
 
                     </div>
                 </div>
-            </div> --}}
+            </div>
 
             <script>
                 var hostUrl = "assets/";
