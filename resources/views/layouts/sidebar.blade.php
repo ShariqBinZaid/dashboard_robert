@@ -61,7 +61,7 @@
                                     </svg>
                                 </span>
                             </span>
-                            <span class="menu-title">Dashboard</span>
+                            <span class="menu-title">Daasdsashboard</span>
                         </span>
                     </a>
                 </div>
