@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('display_picture')->nullable();
             $table->string('name');
-            $table->string('gender')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->nullable();
-            $table->string('dob')->nullable();
+            $table->date('dob')->nullable();
             $table->string('loc')->nullable();
             $table->string('otp')->nullable();
             $table->tinyInteger('is_active')->default(0);

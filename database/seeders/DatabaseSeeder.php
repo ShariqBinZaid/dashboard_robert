@@ -42,7 +42,8 @@ class DatabaseSeeder extends Seeder
             'loc' => 'United State',
             'password' => Hash::make('123456'),
             'display_picture' => 'profileimage/test.png',
-            'user_type' => 'admin'
+            'user_type' => 'admin',
+            'is_active' => '1'
         ]);
         User::create([
             'name' => 'User',
@@ -53,7 +54,8 @@ class DatabaseSeeder extends Seeder
             'loc' => 'California',
             'password' => Hash::make('123456'),
             'display_picture' => 'profileimage/test.png',
-            'user_type' => 'user'
+            'user_type' => 'user',
+            'is_active' => '1'
         ]);
 
         $modules = ['Users', 'Roles', 'Clients', 'Modules'];
@@ -143,6 +145,5 @@ class DatabaseSeeder extends Seeder
             'user_id' => 1,
             'user_type' => 2,
         ]);
-
     }
 }

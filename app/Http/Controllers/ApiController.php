@@ -16,12 +16,12 @@ class ApiController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required',
+            'gender' => 'required',
             'email' => 'required',
-            'designation' => 'required',
-            'user_type' => 'required',
             'phone' => 'required',
+            'dob' => 'required',
+            'loc' => 'required',
             'password' => 'required'
         ]);
 
@@ -41,11 +41,51 @@ class ApiController extends Controller
         // return $input;
         $input['password'] = bcrypt($input['password']);
         $input += ['otp' => rand(100000, 999999)];
+        $input += ['is_active' => 0];
+        $input += ['user_type' => 'user'];
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyApp')->accessToken;
         $success['user'] =  $user;
 
         return $this->sendResponse($success, 'User Registered Successfully.');
+    }
+
+    public function registerupdate(Request $req)
+    {
+        try {
+            $input = $req->all();
+            $validator = Validator::make($input, [
+                'email' => 'required',
+                // Add validation for the password field
+                // 'password' => 'required',
+                // 'confirm_password' => 'required|same:password', // Add validation for the confirm_password field
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['success' => false, 'error' => $validator->errors()]);
+            }
+
+            if (array_key_exists('password', $input)) {
+                $input['password'] = bcrypt($input['password']);
+            }
+
+            if (array_key_exists('confirm_password', $input)) {
+                $input['confirm_password'] = bcrypt($input['confirm_password']);
+            }
+
+            if ($req->file('display_picture')) {
+                unset($input['display_picture']);
+                $input += ['display_picture' => $this->updateprofile($req, 'display_picture', 'profileimage')];
+            }
+
+            // Remove sensitive data from the input array
+            unset($input['_token'], $input['password'], $input['confirm_password']);
+
+            $userupdate = User::where("id", $input['id'])->update($input);
+            return response()->json(['success' => true, 'msg' => 'User Updated Successfully.', 'data' => User::where('id', $input['id'])->first()]);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
     }
 
     public function login(Request $request)

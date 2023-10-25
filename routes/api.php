@@ -18,10 +18,12 @@ use App\Http\Controllers\ApiController;
 
 Route::post('register', [ApiController::class, 'register']);
 Route::post('login', [ApiController::class, 'login']);
-Route::post('generateotp', [ApiController::class, 'generateotp']);
-Route::post('phoneotp', [ApiController::class, 'phoneotp']);
+// Route::post('generateotp', [ApiController::class, 'generateotp']);
+// Route::post('phoneotp', [ApiController::class, 'phoneotp']);
 
 Route::controller(ApiController::class)->group(function () {
+    Route::post('generateotp', 'generateotp')->name('user.generateotp');
+    Route::post('phoneotp', 'phoneotp')->name('user.phoneotp');
     Route::post('userupdate', 'userupdate')->name('user.userupdate');
     Route::post('changepassword', 'changepassword')->name('user.changepassword');
     Route::post('updateregister', 'updateregister')->name('user.updateregister');
