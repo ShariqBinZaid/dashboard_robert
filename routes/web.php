@@ -15,7 +15,7 @@ use App\Http\Controllers\ParentController;
 use App\Http\Controllers\RolePermission\RoleController;
 use App\Http\Controllers\RolePermission\AttachController;
 use App\Http\Controllers\RolePermission\RolePermissionController;
-
+use App\Http\Controllers\SubscriptionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +74,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('client', ClientController::class);
     Route::controller(ClientController::class)->group(function () {
         Route::get('user/client/lists', 'list')->name('user.client.list');
+    });
+
+
+    // ************************ Subscriptions  ************************ //
+    Route::resource('subscriptions', SubscriptionsController::class);
+    Route::controller(SubscriptionsController::class)->group(function () {
+        Route::get('user/subscriptions/lists', 'list')->name('user.subscriptions.list');
     });
 
 

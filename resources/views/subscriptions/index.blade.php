@@ -5,7 +5,7 @@
         <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                 <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                    Users List</h1>
+                    Subscriptions List</h1>
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                     <li class="breadcrumb-item text-muted">
                         <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">Home</a>
@@ -13,11 +13,11 @@
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">User Management</li>
+                    <li class="breadcrumb-item text-muted">Subscriptions Details</li>
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">Users</li>
+                    <li class="breadcrumb-item text-muted">Subscriptions</li>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
                                 </svg>
                             </span>
                             <input type="text" data-kt-user-table-filter="search"
-                                class="form-control form-control-solid w-250px ps-14" placeholder="Search user"
+                                class="form-control form-control-solid w-250px ps-14" placeholder="Search Subscriptions"
                                 id="search_table" />
                         </div>
                     </div>
@@ -51,7 +51,6 @@
                             {{-- @if (Helper::permission('Users.create')) --}}
                             <button type="button" class="btn btn-primary create_new_off_canvas_modal create_user"
                                 data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
-
                                 <span class="svg-icon svg-icon-2">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -60,9 +59,10 @@
                                         <rect x="4.36396" y="11.364" width="16" height="2" rx="1"
                                             fill="currentColor" />
                                     </svg>
-                                </span>Add User
+                                </span>Add Subscriptions
                             </button>
                             {{-- @endif --}}
+
                         </div>
                         <div class="d-flex justify-content-end align-items-center d-none"
                             data-kt-user-table-toolbar="selected">
@@ -137,24 +137,19 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="card-body py-4">
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="users_table">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="subscriptions_table">
                         <thead>
                             <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-
-                                <th>User</th>
                                 <th>Name</th>
-                                <th>Phone</th>
-                                <th>Status</th>
-                                <th>Created By</th>
-                                {{-- <th>Roles</th> --}}
+                                <th>Price</th>
+                                <th>Descriptions</th>
+                                <th>Is Active</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-
                     </table>
                 </div>
             </div>
@@ -171,14 +166,12 @@
                     </div>
                     <div class="card-body py-5">
 
-                        <form method="POST" id="crud-form" action="" class="userFrom" role="form"
-                            enctype="multipart/form-data">
+                        <form class="subscriptionsFrom" enctype="multipart/form-data">
                             @csrf
 
-                            <input type="hidden" name="id" value="">
+                            <input type="hidden" name="id">
 
-                            <div class="fv-row mb-7">
-
+                            {{-- <div class="fv-row mb-7">
 
                                 <label class="d-block fw-semibold fs-6 mb-5">Display Image</label>
                                 <style>
@@ -219,7 +212,7 @@
                                 </div>
                                 <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
 
-                            </div>
+                            </div> --}}
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -229,78 +222,26 @@
                                             type="text" id="name" value="">
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col">
+                                <div class="col-md-12">
                                     <div class="mb-10">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input class="form-control removeclass" placeholder="Email" name="email"
-                                            type="text" id="email" value="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-10">
-                                        <label for="phone" class="form-label">Phone</label>
-                                        <input class="form-control removeclass" placeholder="Phone" name="phone"
-                                            type="text" id="phone" value="">
+                                        <label for="price" class="form-label">Price</label>
+                                        <input class="form-control removeclass" placeholder="Price" name="price"
+                                            type="text" id="price" value="">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="mb-10">
-                                        <label for="dob" class="form-label">Date Of Birth</label>
-                                        <input class="form-control removeclass" placeholder="Date Of Birth"
-                                            name="dob" type="text" id="dob" value="">
+                                        <label for="name" class="form-label">Descriptions</label>
+                                        <textarea class="form-control removeclass" name="desc" id="desc" cols="30" rows="10"></textarea>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <div class="mb-10 ">
-                                        <label for="gender" class="form-label">Gender</label>
-                                        <select class="form-control" name="gender" id="gender">
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 passwordDiv">
-                                    <div class="mb-10 ">
-                                        <label for="password" class="form-label">Password</label>
-                                        <input class="form-control removeclass" placeholder="Password" name="password"
-                                            type="password" autocomplete="new-password" value="" id="password">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-10">
-                                        <label for="phone" class="form-label">Is Active</label>
-                                        <select name="is_active" id="is_active" class="form-control">
-                                            <option value="1" selected>Active</option>
-                                            <option value="0">Disabled</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-10 ">
-                                        <label for="phone" class="form-label">User Type</label>
-                                        <select name="user_type" id="user_type" class="form-control">
-                                            <option value="admin" selected>Admin</option>
-                                            <option value="parent">Parent</option>
-                                        </select>
-                                    </div>
-                                </div>
-
                             </div>
 
                             <div class="error-area"></div>
+
                             <div class="box-footer mt20">
                                 <button type="submit" class="btn btn-primary me-10" id="crud-form-submit-button">
                                     <span class="indicator-label">
@@ -312,15 +253,14 @@
                                     </span>
                                 </button>
                             </div>
-
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 @endsection
+
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"
     integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 @section('page_script')
@@ -338,7 +278,7 @@
 
 <script>
     $(document).ready(function() {
-        $("#dob").daterangepicker({
+        $("#join_on").daterangepicker({
             singleDatePicker: true,
             showDropdowns: true,
             minYear: 1901,
@@ -347,87 +287,53 @@
             var years = moment().diff(start, "years");
             // alert("You are " + years + " years old!");
         });
-        let table = $('#users_table').DataTable({
+
+        let table = $('#subscriptions_table').DataTable({
             responsive: true,
             // processing: true,
             // serverSide: true,
             pageLength: 10,
             lengthChange: true,
             ajax: {
-                url: "{{ route('user.admin.list') }}",
+                url: "{{ route('subscriptions.list') }}",
             },
             columns: [{
-                    data: 'user'
-                },
-                {
                     data: 'name'
                 },
                 {
-                    data: 'phone'
+                    data: 'price'
                 },
                 {
-                    data: 'status'
-                },
-
-                {
-                    data: 'createdAt'
+                    data: 'desc'
                 },
                 {
                     data: 'actions'
-                },
+                }
             ],
         });
 
-        $('body').on('click', '.edit_record', function() {
+        $('body').on('click', '.edit_blog', function() {
             $('.passwordDiv').hide();
             let id = $(this).attr('data-id');
-            $('.drawertitle').html('Edit User')
-            showloader('block')
-            $.get('{{ route('user.show', '') }}/' + id, {
+            $('.drawertitle').html('Edit Subscriptions')
+            showloader('none')
+            $.get('{{ route('subscriptions.show', '') }}/' + id, {
                 _token: '{{ csrf_token() }}',
                 id: id
             }, function(d) {
-                $('.roles').val(d.data.roles).change();
-                $('.skills').val(d.data.skill).change();
                 $('#kt_drawer_example_basic').find('input[name="id"]').val(d.data.id)
-                $('#kt_drawer_example_basic').find('input[name="user_name"]').val(d.data
-                    .user_name)
-                $('#kt_drawer_example_basic').find('input[name="first_name"]').val(d.data
-                    .first_name)
-                $('#kt_drawer_example_basic').find('input[name="last_name"]').val(d.data
-                    .last_name)
-                $('#kt_drawer_example_basic').find('input[name="email"]').val(d.data.email)
-                $('#kt_drawer_example_basic').find('input[name="address"]').val(d.data.email)
-                $('#kt_drawer_example_basic').find('input[name="phone"]').val(d.data
-                    .phone)
-                $('#kt_drawer_example_basic').find('select[name="user_type"]').val(d.data
-                    .user_type)
-                var image = "{{ asset('assets/media/svg/files/blank-image-dark.svg') }}";
-                if (d.data.display_picture != 'http://127.0.0.1:8000/storage') {
-                    image = d.data.display_picture
-                }
-                $('#kt_drawer_example_basic').find('.dispalyImage').css('background-image',
-                    'url(' + image + ')')
-                showloader('none')
+                $('#kt_drawer_example_basic').find('input[name="name"]').val(d.data.name)
+                $('#kt_drawer_example_basic').find('input[name="price"]').val(d.data.price)
+                $('#kt_drawer_example_basic').find('textarea[name="desc"]').val(d.data.desc)
             }, 'json')
 
         });
+
         $('#search_table').on('keyup', function() {
             table.search($(this).val()).draw();
         });
-        $('body').on('click', '.create_user', function(e) {
 
-            $('.roles').val(0).change();
-            $('.passwordDiv').show();
-            $('.drawertitle').html('Add User');
-
-            var image = "{{ asset('assets/media/svg/files/blank-image-dark.svg') }}";
-            $('#kt_drawer_example_basic').find('input').val('')
-            $('#kt_drawer_example_basic').find('.dispalyImage').css('background-image', 'url(' + image +
-                ')')
-        })
-
-        $('body').on('submit', '.userFrom', function(e) {
+        $('body').on('submit', '.subscriptionsFrom', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
             showloader('block')
@@ -438,7 +344,7 @@
             });
             $.ajax({
                 type: 'POST',
-                url: "{{ route('user.store', '') }}",
+                url: "{{ route('subscriptions.store', '') }}",
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -454,22 +360,18 @@
                         toastr.success(d.msg);
                         table.ajax.reload()
                         KTDrawer.hideAll();
-
                     }
                     showloader('none')
                 },
-                error: function(data) {
-
-                }
+                error: function(data) {}
             });
-        })
-
+        });
 
         $('body').on('click', '.delete_record', function() {
             let id = $(this).attr('data-id');
 
             Swal.fire({
-                html: `Are you sure you want to delete this user`,
+                html: `Are you sure you want to delete this Subscriptions`,
                 icon: "info",
                 buttonsStyling: false,
                 showCancelButton: true,
@@ -484,7 +386,7 @@
                 if (data.isConfirmed == true) {
                     showloader('block')
                     $.ajax({
-                        url: '{{ route('user.destroy', '') }}/' + id,
+                        url: '{{ route('subscriptions.destroy', '') }}/' + id,
                         type: 'DELETE',
                         dataType: 'json',
                         data: {
@@ -499,11 +401,8 @@
                         }
                     })
                     showloader('none')
-
                 }
-
             });
         });
-
     })
 </script>

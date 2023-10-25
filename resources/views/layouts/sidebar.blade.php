@@ -53,12 +53,12 @@
                                         xmlns="http://www.w3.org/2000/svg">
                                         <rect x="2" y="2" width="9" height="9" rx="2"
                                             fill="currentColor"></rect>
-                                        <rect opacity="0.3" x="13" y="2" width="9" height="9"
-                                            rx="2" fill="currentColor"></rect>
-                                        <rect opacity="0.3" x="13" y="13" width="9" height="9"
-                                            rx="2" fill="currentColor"></rect>
-                                        <rect opacity="0.3" x="2" y="13" width="9" height="9"
-                                            rx="2" fill="currentColor"></rect>
+                                        <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
+                                            fill="currentColor"></rect>
+                                        <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
+                                            fill="currentColor"></rect>
+                                        <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
+                                            fill="currentColor"></rect>
                                     </svg>
                                 </span>
                             </span>
@@ -95,13 +95,13 @@
 
             </div>
 
-            {{-- <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
+            <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
                 data-kt-menu="true" data-kt-menu-expand="false">
 
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <a href="{{ route('parent.index') }}">
+                    <a href="{{ route('subscriptions.index') }}">
                         <span class="menu-link">
-                            <span class="menu-icon {{ request()->is('parent') ? 'active' : '' }}">
+                            <span class="menu-icon {{ request()->is('user') ? 'active' : '' }}">
                                 <span class="svg-icon svg-icon-2">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -114,43 +114,12 @@
                                     </svg>
                                 </span>
                             </span>
-                            <span class="menu-title">Parents</span>
+                            <span class="menu-title">Subscriptions</span>
                         </span>
                     </a>
                 </div>
 
             </div>
-
-            <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
-                data-kt-menu="true" data-kt-menu-expand="false">
-
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <a href="{{ route('packages.index') }}">
-                        <span class="menu-link">
-                            <span class="menu-icon {{ request()->is('parent') ? 'active' : '' }}">
-                                <span class="svg-icon svg-icon-2">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M6.5 11C8.98528 11 11 8.98528 11 6.5C11 4.01472 8.98528 2 6.5 2C4.01472 2 2 4.01472 2 6.5C2 8.98528 4.01472 11 6.5 11Z"
-                                            fill="currentColor" />
-                                        <path opacity="0.3"
-                                            d="M13 6.5C13 4 15 2 17.5 2C20 2 22 4 22 6.5C22 9 20 11 17.5 11C15 11 13 9 13 6.5ZM6.5 22C9 22 11 20 11 17.5C11 15 9 13 6.5 13C4 13 2 15 2 17.5C2 20 4 22 6.5 22ZM17.5 22C20 22 22 20 22 17.5C22 15 20 13 17.5 13C15 13 13 15 13 17.5C13 20 15 22 17.5 22Z"
-                                            fill="currentColor" />
-                                    </svg>
-                                </span>
-                            </span>
-                            <span class="menu-title">Packages</span>
-
-                        </span>
-                    </a>
-                </div>
-
-            </div> --}}
-
-
-
-
 
         </div>
     </div>

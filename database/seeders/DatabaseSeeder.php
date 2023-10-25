@@ -9,6 +9,7 @@ use App\Models\Packages;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RolePermission;
+use App\Models\Subscriptions;
 use App\Models\User;
 use App\Models\UserInType;
 use App\Models\UserRole;
@@ -56,6 +57,19 @@ class DatabaseSeeder extends Seeder
             'display_picture' => 'profileimage/test.png',
             'user_type' => 'user',
             'is_active' => '1'
+        ]);
+
+        Subscriptions::create([
+            'name' => 'Monthly',
+            'price' => '100',
+            'desc' => 'Test',
+            'is_active' => 1,
+        ]);
+        Subscriptions::create([
+            'name' => 'Yearly',
+            'price' => '1000',
+            'desc' => 'Test 2',
+            'is_active' => 1,
         ]);
 
         $modules = ['Users', 'Roles', 'Clients', 'Modules'];

@@ -37,7 +37,6 @@ class UserController extends Controller
         return new UserAdminResource($users);
     }
 
-
     public function store(Request $req)
     {
 
@@ -47,8 +46,7 @@ class UserController extends Controller
 
         $validator = Validator::make($input, [
             'email' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required',
             'email' => 'email|required|unique:users,email,' . $input['id'],
         ]);
 
@@ -76,18 +74,18 @@ class UserController extends Controller
                 }
             }
             unset($input['c_password']);
-            if (Helper::permission('Users.update')) {
-                $user = User::where("id", $input['id'])->update($input);
+            // if (Helper::permission('Users.update')) {
+            $user = User::where("id", $input['id'])->update($input);
 
-                return response()->json(['success' => true, 'msg' => 'User Updated']);
-            }
+            return response()->json(['success' => true, 'msg' => 'User Updated']);
+            // }
             return response()->json(['success' => false, 'msg' => 'Access Denied']);
         } else {
-            if (Helper::permission('Users.create')) {
-                $user = User::create($input);
+            // if (Helper::permission('Users.create')) {
+            $user = User::create($input);
 
-                return response()->json(['success' => true, 'msg' => 'User Created']);
-            }
+            return response()->json(['success' => true, 'msg' => 'User Created']);
+            // }
             return response()->json(['success' => false, 'msg' => 'Access Denied']);
         }
     }

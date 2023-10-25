@@ -18,6 +18,7 @@ class Controller extends BaseController
         $p = $request->input();
         $path = '';
         $file_name = '';
+
         if ($request->file($file)) {
 
             $request->validate([
@@ -29,6 +30,7 @@ class Controller extends BaseController
             $file_name =  $folderName . '/' . $fileName;
             $path = $request->file($file)->storeAs('public/' . $folderName, $fileName);
         }
+
         return $file_name;
     }
 
@@ -39,7 +41,6 @@ class Controller extends BaseController
             'data'    => $result,
             'message' => $message,
         ];
-
 
         return response()->json($response, 200);
     }
@@ -57,11 +58,9 @@ class Controller extends BaseController
             'message' => $error,
         ];
 
-
         if (!empty($errorMessages)) {
             $response['data'] = $errorMessages;
         }
-
 
         return response()->json($response, $code);
     }

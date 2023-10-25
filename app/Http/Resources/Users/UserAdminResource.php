@@ -62,7 +62,7 @@ class UserAdminResource extends JsonResource
                 $creator = '';
                 $users[] = [
                     'user' => $userAvatar,
-                    'user_name' => $user->user_name,
+                    'name' => $user->name,
                     'phone' => $user->phone,
                     'status' => $status,
                     'createdBy' => $creator,
