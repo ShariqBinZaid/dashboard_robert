@@ -57,7 +57,7 @@
                                             style="fill: #D6001B;"></path>
                                         <path id="primary"
                                             d="M11,4v7a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V4A2,2,0,0,1,4,2H9A2,2,0,0,1,11,4Zm9,7H15a2,2,0,0,0-2,2v7a2,2,0,0,0,2,2h5a2,2,0,0,0,2-2V13A2,2,0,0,0,20,11Z"
-                                            style="fill: rgb(0, 0, 0);"></path>
+                                            style="fill: #ffffff;"></path>
                                     </svg>
                                 </span>
                             </span>
