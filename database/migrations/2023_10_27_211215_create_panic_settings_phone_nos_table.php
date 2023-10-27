@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('panic_settings_phone_nos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('panic_settings_id');
+            $table->foreign('panic_settings_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
-            $table->string('plans');
-            $table->string('price');
-            $table->string('duration');
-            $table->longText('desc');
-            $table->tinyInteger('is_active')->default(1);
+            $table->integer('phone');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('panic_settings_phone_nos');
     }
 };

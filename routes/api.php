@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\SubscriptionsController;
 
 /*
@@ -23,6 +24,11 @@ Route::post('login', [ApiController::class, 'login']);
 
 
 Route::middleware('auth:api')->group(function () {
+
+    Route::controller(CategoriesController::class)->group(function () {
+        Route::post('categories', 'store')->name('user.categories');
+        Route::get('getcategories', 'getcategories')->name('user.getcategories');
+    });
 
     Route::controller(ApiController::class)->group(function () {
         Route::post('generateotp', 'generateotp')->name('user.generateotp');
