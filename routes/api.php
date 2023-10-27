@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\EmergencySettingsController;
+use App\Http\Controllers\FakeTextSettingsController;
 use App\Http\Controllers\SubscriptionsController;
+use App\Models\FakeTextSettings;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +33,19 @@ Route::middleware('auth:api')->group(function () {
         Route::get('getcategories', 'getcategories')->name('user.getcategories');
     });
 
+
+    Route::controller(EmergencySettingsController::class)->group(function () {
+        Route::post('emergency', 'store')->name('user.categories');
+        Route::get('getemergency', 'getemergency')->name('user.getemergency');
+    });
+
+
+    Route::controller(FakeTextSettingsController::class)->group(function () {
+        Route::post('faketext', 'store')->name('user.faketext');
+        Route::get('getfaketext', 'getfaketext')->name('user.getfaketext');
+    });
+
+
     Route::controller(ApiController::class)->group(function () {
         Route::post('generateotp', 'generateotp')->name('user.generateotp');
         Route::post('phoneotp', 'phoneotp')->name('user.phoneotp');
@@ -40,6 +56,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('search', 'search')->name('user.search');
         Route::post('searchTour', 'searchTour')->name('user.searchTour');
     });
+
 
     Route::controller(SubscriptionsController::class)->group(function () {
         Route::post('subscriptions', 'store')->name('user.subscriptions');
