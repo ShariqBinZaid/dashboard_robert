@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\EmergencySettingsController;
+use App\Http\Controllers\FakeCallSettingsController;
 use App\Http\Controllers\FakeTextSettingsController;
 use App\Http\Controllers\SubscriptionsController;
 use App\Models\FakeTextSettings;
@@ -43,6 +44,12 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(FakeTextSettingsController::class)->group(function () {
         Route::post('faketext', 'store')->name('user.faketext');
         Route::get('getfaketext', 'getfaketext')->name('user.getfaketext');
+    });
+
+
+    Route::controller(FakeCallSettingsController::class)->group(function () {
+        Route::post('fakecall', 'store')->name('user.fakecall');
+        Route::get('getfakecall', 'getfakecall')->name('user.getfakecall');
     });
 
 

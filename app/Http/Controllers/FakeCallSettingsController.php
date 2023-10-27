@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FakeCallSettings;
+use App\Models\FakeCallSettingsLogs;
 use Illuminate\Http\Request;
-use App\Models\EmergencySettings;
-use App\Models\EmergencySettingsLogs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class EmergencySettingsController extends Controller
+class FakeCallSettingsController extends Controller
 {
     public function store(Request $req)
     {
@@ -30,23 +30,23 @@ class EmergencySettingsController extends Controller
             $input += ['user_id' => Auth::user()->id];
 
             if (@$input['id']) {
-                $emergency = EmergencySettings::where("id", $input['id'])->update($input);
-                $emergencylog = EmergencySettingsLogs::where("id", $input['id'])->updated([
-                    'emergency_setting_id' => $emergency->id,
+                $fakecall = FakeCallSettings::where("id", $input['id'])->update($input);
+                $fakecalllog = FakeCallSettingsLogs::where("id", $input['id'])->updated([
+                    'fake_call_settings_id' => $fakecall->id,
                     'name' => $input['name'],
                     'phone' => $input['phone'],
                     'time' => $input['time'],
                 ]);
-                return response()->json(['success' => true, 'msg' => 'Emergency Settings Updated Successfully.']);
+                return response()->json(['success' => true, 'msg' => 'Fake Call Settings Updated Successfully.']);
             } else {
-                $emergency = EmergencySettings::create($input);
-                $emergencylog = EmergencySettingsLogs::create([
-                    'emergency_setting_id' => $emergency->id,
+                $fakecall = FakeCallSettings::create($input);
+                $fakecalllog = FakeCallSettingsLogs::create([
+                    'fake_call_settings_id' => $fakecall->id,
                     'name' => $input['name'],
                     'phone' => $input['phone'],
                     'time' => $input['time'],
                 ]);
-                return response()->json(['success' => true, 'msg' => 'Emergency Settings Created Successfully', 'data' => EmergencySettings::with('User')->where('id', $emergency->id)->get()]);
+                return response()->json(['success' => true, 'msg' => 'Fake Call Settings Created Successfully', 'data' => FakeCallSettings::with('User')->where('id', $fakecall->id)->get()]);
             }
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
