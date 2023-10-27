@@ -14,8 +14,6 @@ class CategoriesController extends Controller
 
         $validator = Validator::make($input, [
             'name' => 'required',
-            'price' => 'required',
-            'desc' => 'required',
         ]);
 
         // dd($input);
