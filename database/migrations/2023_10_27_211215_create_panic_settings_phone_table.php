@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('panic_settings_id');
             $table->foreign('panic_settings_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('phone');
+            $table->string('phone');
             $table->timestamps();
         });
     }
