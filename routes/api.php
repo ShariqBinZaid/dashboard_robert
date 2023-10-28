@@ -66,8 +66,9 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::controller(PanicSettingsController::class)->group(function () {
-        Route::post('panic', 'store')->name('user.panic');
-        Route::get('getpanic', 'getpanic')->name('user.getpanic');
+        Route::post('panic/update', 'store');
+        Route::get('panic/details', 'getpanic');
+        Route::post('panic/toggle', 'panicToggle');
     });
 
 
