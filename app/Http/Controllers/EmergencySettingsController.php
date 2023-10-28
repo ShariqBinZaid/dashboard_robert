@@ -46,16 +46,16 @@ class EmergencySettingsController extends Controller
                     'phone' => $input['phone'],
                     'time' => $input['time'],
                 ]);
-                return response()->json(['success' => true, 'msg' => 'Emergency Settings Created Successfully', 'data' => EmergencySettings::with('User')->where('id', $emergency->id)->get()]);
+                return response()->json(['success' => true, 'msg' => 'Emergency Settings Created Successfully', 'data' => EmergencySettings::with('User', 'Category')->where('id', $emergency->id)->get()]);
             }
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
     }
 
-    public function getfakecall()
+    public function getemergency()
     {
-        $getfakecall = FakeCallSettings::with('User')->get();
-        return response()->json(['success' => true, 'data' => $getfakecall]);
+        $getemergency = EmergencySettings::with('User', 'Category')->get();
+        return response()->json(['success' => true, 'data' => $getemergency]);
     }
 }

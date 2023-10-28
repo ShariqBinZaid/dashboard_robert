@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('panic_settings_phone_nos', function (Blueprint $table) {
+        Schema::create('panic_settings_phones', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('panic_settings_id');
             $table->foreign('panic_settings_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('name');
             $table->integer('phone');
             $table->timestamps();
         });
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('panic_settings_phone_nos');
+        Schema::dropIfExists('panic_settings_phones');
     }
 };
