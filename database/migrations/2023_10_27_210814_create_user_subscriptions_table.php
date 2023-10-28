@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('user_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('plans');
-            $table->string('price');
-            $table->string('duration');
-            $table->longText('desc');
-            $table->tinyInteger('is_active')->default(1);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('subscription_id');
+            $table->foreign('subscription_id')->references('id')->on('subscriptions')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('user_subscriptions');
     }
 };

@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('fake_call_settings_logs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('fake_call_settings_id');
+            $table->foreign('fake_call_settings_id')->references('id')->on('fake_call_settings')->onDelete('cascade');
             $table->string('name');
-            $table->string('plans');
-            $table->string('price');
-            $table->string('duration');
-            $table->longText('desc');
-            $table->tinyInteger('is_active')->default(1);
+            $table->integer('phone');
+            $table->dateTime('time');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('fake_call_settings_logs');
     }
 };
