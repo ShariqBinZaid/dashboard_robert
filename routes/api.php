@@ -39,6 +39,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('searchUser', 'searchUser')->name('user.searchUser');
         Route::post('search', 'search')->name('user.search');
         Route::post('searchTour', 'searchTour')->name('user.searchTour');
+        Route::post('user/update/fcm', 'fcmid');
     });
 
     Route::controller(CategoriesController::class)->group(function () {

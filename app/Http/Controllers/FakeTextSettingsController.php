@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\FakeTextSettingsResource;
+use App\Services\FirebaseService;
 use App\Services\TextInboxService;
 use Illuminate\Http\Request;
 use App\Models\FakeTextSettings;
@@ -58,6 +59,9 @@ class FakeTextSettingsController extends Controller
             }
             //Create a message for text inbox
             $message = $inboxService->store($settings);
+            //Send firebase notification
+            $firebaseService = new FirebaseService();
+            $firebaseService->sendNotification($message->name, $message->message);
             return $this->sendResponse($message->id, 'Message sent successfully!');
         } catch (\Exception $e){
             return $this->sendError($e->getMessage());

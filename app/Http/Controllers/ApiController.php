@@ -187,4 +187,19 @@ class ApiController extends Controller
 
         return response()->json(['success' => true, 'data' => $searchResults]);
     }
+
+    public function fcmid(Request $request)
+    {
+        try {
+            $request->validate([
+                'fcm_id' => 'required'
+            ]);
+            $user = Auth::user();
+            $user->fcm_id = $request->fcm_id;
+            $user->save();
+            return $this->sendResponse([], 'FCM ID Updated!');
+        } catch (\Exception $e){
+            return $this->sendError($e->getMessage());
+        }
+    }
 }
