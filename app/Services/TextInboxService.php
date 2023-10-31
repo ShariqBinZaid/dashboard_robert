@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\TextInbox;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 Class TextInboxService{
     public function store($settings){
@@ -22,7 +23,7 @@ Class TextInboxService{
 
     public function inbox(){
         try{
-            $inbox = TextInbox::where('user_id', Auth::id())->groupBy('name')->latest('created_at')->get();
+            $inbox = TextInbox::select('*', DB::raw('COUNT(id) As total_messages'))->where('user_id', Auth::id())->groupBy('name')->latest('created_at')->get();
             return $inbox;
         } catch (\Exception $e){
             throw $e;

@@ -16,7 +16,7 @@ class TextThreadsResource extends JsonResource
     {
         return [
             'message' => $this->message,
-            'message_on' => \Carbon\Carbon::parse($this->created_at)->diffForHumans()
+            'message_on' => \Carbon\Carbon::parse($this->created_at)->format('Y-m-d H:i:s')
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TextInboxResource extends JsonResource
@@ -17,7 +18,9 @@ class TextInboxResource extends JsonResource
         return [
             'name' => $this->name,
             'phone' => $this->phone,
-            'message' => $this->message
+            'message' => $this->message,
+            'count' => $this->total_messages,
+            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s')
         ];
     }
 }
