@@ -22,7 +22,7 @@ Class TextInboxService{
 
     public function inbox(){
         try{
-            $inbox = TextInbox::where('user_id', Auth::id())->groupBy('name')->orderBy('id', 'desc')->get();
+            $inbox = TextInbox::where('user_id', Auth::id())->groupBy('name')->latest('created_at')->get();
             return $inbox;
         } catch (\Exception $e){
             throw $e;
@@ -31,7 +31,7 @@ Class TextInboxService{
 
     public function threads($name){
         try{
-            return TextInbox::where('user_id', Auth::id())->where('name', $name)->get();
+            return TextInbox::where('user_id', Auth::id())->where('name', $name)->latest('created_at')->get();
         } catch (\Exception $e){
             throw $e;
         }
