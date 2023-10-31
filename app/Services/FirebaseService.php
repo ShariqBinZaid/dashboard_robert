@@ -24,8 +24,8 @@ class FirebaseService
                 'json' => [
                     'to' => $fcmToken,
                     'notification' => [
-                        'title' => 'Hello from Guzzle',
-                        'body' => 'This is a test notification sent via Guzzle HTTP.',
+                        'title' => '"'.$title.'"',
+                        'body' => '"'.$message.'"',
                     ],
                 ],
             ]);
