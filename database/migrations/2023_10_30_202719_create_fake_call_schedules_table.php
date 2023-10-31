@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fake_call_settings_logs', function (Blueprint $table) {
+        Schema::create('fake_call_schedules', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('fake_call_settings_id');
-            $table->foreign('fake_call_settings_id')->references('id')->on('fake_call_settings')->onDelete('cascade');
-            $table->string('name');
-            $table->integer('phone');
-            $table->dateTime('time');
+            $table->foreign('fake_call_settings_id')->references('id')->on('fake_call_settings')->cascadeOnUpdate();
+            $table->dateTime('schedule_time');
+            $table->tinyInteger('is_repeat')->nullable()->default(0);
+            $table->string('ringtone')->nullable();
+            $table->tinyInteger('can_vibrate')->nullable()->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fake_call_settings_logs');
+        Schema::dropIfExists('fake_call_schedules');
     }
 };

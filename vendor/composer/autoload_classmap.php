@@ -52,6 +52,7 @@ return array(
     'App\\Http\\Requests\\UpdateGroupRequest' => $baseDir . '/app/Http/Requests/UpdateGroupRequest.php',
     'App\\Http\\Requests\\UpdateSkillsRequest' => $baseDir . '/app/Http/Requests/UpdateSkillsRequest.php',
     'App\\Http\\Resources\\ModuleResource' => $baseDir . '/app/Http/Resources/ModuleResource.php',
+    'App\\Http\\Resources\\PanicSettingsResource' => $baseDir . '/app/Http/Resources/PanicSettingsResource.php',
     'App\\Http\\Resources\\ParentResource' => $baseDir . '/app/Http/Resources/ParentResource.php',
     'App\\Http\\Resources\\PermissionResource' => $baseDir . '/app/Http/Resources/PermissionResource.php',
     'App\\Http\\Resources\\RoleResource' => $baseDir . '/app/Http/Resources/RoleResource.php',

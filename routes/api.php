@@ -9,7 +9,7 @@ use App\Http\Controllers\FakeCallSettingsController;
 use App\Http\Controllers\FakeTextSettingsController;
 use App\Http\Controllers\PanicSettingsController;
 use App\Http\Controllers\SubscriptionsController;
-use App\Models\FakeTextSettings;
+use App\Http\Controllers\TextInboxController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,8 +54,9 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::controller(FakeTextSettingsController::class)->group(function () {
-        Route::post('faketext', 'store')->name('user.faketext');
-        Route::get('getfaketext', 'getfaketext')->name('user.getfaketext');
+        Route::post('faketext/update', 'store');
+        Route::get('faketext/details', 'details');
+        Route::get('faketext/toggle', 'generateSMS');
     });
 
 
@@ -75,5 +76,10 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(SubscriptionsController::class)->group(function () {
         Route::post('subscriptions', 'store')->name('user.subscriptions');
         Route::get('getsubscriptions', 'getsubscriptions')->name('user.getsubscriptions');
+    });
+
+    Route::controller(TextInboxController::class)->group(function() {
+        Route::get('text/inbox', 'loadInbox');
+        Route::get('text/inbox/threads/{name}', 'loadThreads');
     });
 });

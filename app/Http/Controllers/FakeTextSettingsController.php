@@ -2,61 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FakeTextLogs;
+use App\Http\Resources\FakeTextSettingsResource;
+use App\Services\TextInboxService;
 use Illuminate\Http\Request;
 use App\Models\FakeTextSettings;
-use App\Models\FakeTextSettingsLogs;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class FakeTextSettingsController extends Controller
 {
-    public function store(Request $req)
+    public function store(Request $request)
     {
         try {
-            $input = $req->all();
-
-            $validator = Validator::make($input, [
+            $request->validate([
                 'name' => 'required',
                 'phone' => 'required',
                 'message' => 'required',
             ]);
-
-            // dd($input);
-            if ($validator->fails()) {
-                return response()->json(['success' => false, 'error' => $validator->errors()]);
-            }
-
-            unset($input['_token']);
-            $input += ['user_id' => Auth::user()->id];
-
-            if (@$input['id']) {
-                $faketext = FakeTextSettings::where("id", $input['id'])->update($input);
-                $faketextlog = FakeTextSettingsLogs::where("id", $input['id'])->updated([
-                    'fake_text_setting_id' => $faketext->id,
-                    'name' => $input['name'],
-                    'phone' => $input['phone'],
-                    'message' => $input['message'],
-                ]);
-                return response()->json(['success' => true, 'msg' => 'Fake Text Settings Updated Successfully.']);
+            //get fake text settings
+            $settings = FakeTextSettings::where('user_id', Auth::id())->first();
+            if ($settings) {
+                $settings->name = $request->name;
+                $settings->phone = $request->phone;
+                $settings->message = $request->message;
+                $settings->save();
             } else {
-                $faketext = FakeTextSettings::create($input);
-                $faketextlog = FakeTextSettingsLogs::create([
-                    'fake_text_setting_id' => $faketext->id,
-                    'name' => $input['name'],
-                    'phone' => $input['phone'],
-                    'message' => $input['message'],
-                ]);
-                return response()->json(['success' => true, 'msg' => 'Fake Text Settings Created Successfully', 'data' => FakeTextSettings::with('User')->where('id', $faketext->id)->get()]);
+                $settings = new FakeTextSettings();
+                $settings->user_id = Auth::id();
+                $settings->name = $request->name;
+                $settings->phone = $request->phone;
+                $settings->message = $request->message;
+                $settings->save();
             }
+            return $this->sendResponse(new FakeTextSettingsResource($settings), 'Fake text settings updated successfully!');
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
     }
 
-    public function getfaketext()
+    public function details()
     {
-        $getfaketext = FakeTextSettings::with('User')->get();
-        return response()->json(['success' => true, 'data' => $getfaketext]);
+        try {
+            $settings = FakeTextSettings::where('user_id', Auth::id())->firstOrFail();
+            return $this->sendResponse(new FakeTextSettingsResource($settings), 'Settings retrieved successfully!');
+        } catch (\Exception $e){
+            return $this->sendError($e->getMessage());
+        }
+    }
+    public function generateSMS(TextInboxService $inboxService)
+    {
+        try {
+            //check for service registration
+            $settings = FakeTextSettings::where('user_id', Auth::id())->first();
+            if(!$settings){
+                throw new \Exception('Please setup fake SMS settings!');
+            }
+            //Create a message for text inbox
+            $message = $inboxService->store($settings);
+            return $this->sendResponse($message->id, 'Message sent successfully!');
+        } catch (\Exception $e){
+            return $this->sendError($e->getMessage());
+        }
     }
 }

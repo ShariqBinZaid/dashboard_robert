@@ -663,6 +663,7 @@ class ComposerStaticInita03f274ec08755f5b252f87f7381ed0c
         'App\\Http\\Requests\\UpdateGroupRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateGroupRequest.php',
         'App\\Http\\Requests\\UpdateSkillsRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateSkillsRequest.php',
         'App\\Http\\Resources\\ModuleResource' => __DIR__ . '/../..' . '/app/Http/Resources/ModuleResource.php',
+        'App\\Http\\Resources\\PanicSettingsResource' => __DIR__ . '/../..' . '/app/Http/Resources/PanicSettingsResource.php',
         'App\\Http\\Resources\\ParentResource' => __DIR__ . '/../..' . '/app/Http/Resources/ParentResource.php',
         'App\\Http\\Resources\\PermissionResource' => __DIR__ . '/../..' . '/app/Http/Resources/PermissionResource.php',
         'App\\Http\\Resources\\RoleResource' => __DIR__ . '/../..' . '/app/Http/Resources/RoleResource.php',

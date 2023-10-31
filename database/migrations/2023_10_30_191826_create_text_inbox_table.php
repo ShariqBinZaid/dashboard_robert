@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('emergency_settings_logs', function (Blueprint $table) {
+        Schema::create('text_inbox', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('emergency_setting_id');
-            $table->foreign('emergency_setting_id')->references('id')->on('emergency_settings')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name');
-            $table->integer('phone');
-            $table->longText('time');
+            $table->string('phone');
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('emergency_message_settings_logs');
+        Schema::dropIfExists('text_inbox');
     }
 };

@@ -13,10 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('emergency_message_templates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('message');
             $table->timestamps();
+        });
+
+        Schema::table('emergency_settings', function(Blueprint $table){
+            $table->foreign('emergency_message_template_id')->references('id')->on('emergency_message_templates')->cascadeOnUpdate();
         });
     }
 
@@ -27,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('emergency_message_templates');
     }
 };
