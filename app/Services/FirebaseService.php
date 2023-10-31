@@ -11,15 +11,15 @@ class FirebaseService
     public function sendNotification($title, $message)
     {
         try {
-            $serverKey = 'AAAAhbOe1cQ:APA91bFAQy6_kgW3zit26uNjPboL_g19tELuic8BhrDa5Ex89IDRo-FR58krLUc7wT4gDixn4JT4Qt5kc8ZkygzYupzNfmjSqi9TEnhDIPujxUD4I6bTnAp_8ymSgGPFf508uw1OGhsa'; // Replace with your Firebase Server Key
+            $serverKey = 'AAAACoDQsOk:APA91bHAHZRoItnZKVnkL1AIwut46-Ok0Vfj2lxWkWp3GOklzGWX_78bX-OJpTHdfhDF32phCtXNBf7ka9e5KDHisR2ZSJQixv45p2XgatY3frFJtduHXwrg8CEjGgUJ43wV7sUfMkWG'; // Replace with your Firebase Server Key
             $fcmToken = Auth::user()->fcm_id; // Replace with the recipient's FCM token
 
             $client = new Client();
 
             $response = $client->post('https://fcm.googleapis.com/fcm/send', [
                 'headers' => [
-                    'Authorization' => 'key=' . $serverKey,
-                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $serverKey,
+                    'Content-MD5' => 'application/json',
                 ],
                 'json' => [
                     'to' => $fcmToken,
