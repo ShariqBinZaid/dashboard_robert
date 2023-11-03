@@ -10,6 +10,8 @@ use App\Http\Controllers\FakeTextSettingsController;
 use App\Http\Controllers\PanicSettingsController;
 use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\TextInboxController;
+use App\Http\Controllers\EmergencyMessageTemplatesController;
+use App\Http\Controllers\EmergencyMessageSettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +26,6 @@ use App\Http\Controllers\TextInboxController;
 
 Route::post('register', [ApiController::class, 'register']);
 Route::post('login', [ApiController::class, 'login']);
-// Route::post('generateotp', [ApiController::class, 'generateotp']);
-// Route::post('phoneotp', [ApiController::class, 'phoneotp']);
-
 
 Route::middleware('auth:api')->group(function () {
 
@@ -82,5 +81,19 @@ Route::middleware('auth:api')->group(function () {
     Route::controller(TextInboxController::class)->group(function() {
         Route::get('text/inbox', 'loadInbox');
         Route::get('text/inbox/threads/{name}', 'loadThreads');
+    });
+
+    Route::controller(EmergencyMessageTemplatesController::class)->group(function () {
+        Route::post('template/store', 'store');
+        Route::get('template/list', 'list');
+        Route::get('template/details/{id}', 'details');
+        Route::get('template/delete/{id}', 'delete');
+    });
+
+    Route::controller(EmergencyMessageSettingsController::class)->group(function () {
+        Route::post('emergency/settings/update', 'update');
+        Route::get('emergency/settings/details', 'details');
+        Route::post('emergency/settings/add/schedule', 'addSchedule');
+        Route::get('emergency/settings/toggle/schedule/{id}', 'toggleRepeatSchedule');
     });
 });
