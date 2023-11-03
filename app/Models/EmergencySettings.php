@@ -15,8 +15,8 @@ class EmergencySettings extends Model
         return $this->hasMany(User::class, 'id', 'user_id');
     }
 
-    public function Category()
+    public function schedules()
     {
-        return $this->hasMany(Categories::class, 'id', 'category_id');
+        return $this->hasMany(EmergencyMessageSchedules::class);
     }
 }

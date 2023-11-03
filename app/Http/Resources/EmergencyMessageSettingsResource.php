@@ -18,6 +18,7 @@ class EmergencyMessageSettingsResource extends JsonResource
             'name' => $this->name,
             'phone' => $this->phone,
             'message' => $this->message,
+            'schedules' => EmergencyMessageSchedulesResource::collection($this->schedules)
         ];
     }
 }

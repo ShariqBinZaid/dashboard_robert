@@ -95,5 +95,6 @@ Route::middleware('auth:api')->group(function () {
         Route::get('emergency/settings/details', 'details');
         Route::post('emergency/settings/add/schedule', 'addSchedule');
         Route::get('emergency/settings/toggle/schedule/{id}', 'toggleRepeatSchedule');
+        Route::get('emergency/settings/toggle', 'toggleService');
     });
 });
