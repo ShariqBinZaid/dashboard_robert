@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Resources\LoginUserResource;
 use App\Models\User;
 use App\Models\Packages;
 use Illuminate\Http\Request;
@@ -14,40 +16,60 @@ class ApiController extends Controller
 {
     public function register(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'gender' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'dob' => 'required',
-            // 'loc' => 'required',
-            'password' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+        try {
+            $request->validate([
+                'name' => 'required',
+                'gender' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'phone' => 'required',
+                'dob' => 'required',
+                'password' => 'required|confirmed',
+                'password_confirmation' => 'required'
+            ]);
+            $display_picture = null;
+            if ($request->file('display_picture')) {
+                $display_picture = $this->updateprofile($request, 'display_picture', 'profileimage');
+            }
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'gender' => $request->gender,
+                'phone' => $request->phone,
+                'dob' => $request->dob,
+                'password' => Hash::make($request->password),
+                'display_picture' => $display_picture,
+                'otp' => rand('1000', '9999'),
+                'is_active' => 0,
+                'user_type' => 'user'
+            ]);
+            return $this->sendResponse(['id' => $user->id], 'User Registered Successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
         }
-        $users  = User::where('email', $request['email'])->get();
-        if ($users->count() > 0) {
-            return response()->json(['success' => false, 'msg' => 'Email Already Exist']);
-            die;
-        }
-        if ($request->file('display_picture')) {
+    }
 
-            unset($input['display_picture']);
-            $input += ['display_picture' => $this->updateprofile($request, 'display_picture', 'profileimage')];
+    public function verify(Request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required|numeric',
+                'otp' => 'required|numeric'
+            ]);
+            $user = User::where('id', $request->id)->where('otp', $request->otp)->first();
+            if (!$user) {
+                throw new \Exception('Invalid OTP!');
+            }
+            if ($user->is_active == 1) {
+                throw new \Exception('OTP already used to verify account!');
+            }
+            $user->is_active = 1;
+            $user->save();
+            $token = $user->createToken('MyApp')->accessToken;
+            Auth::login($user);
+            return $this->sendResponse(['token' => $token], 'User verified successfully!');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
         }
-        // return $input;
-        $input['password'] = bcrypt($input['password']);
-        $input += ['otp' => rand(100000, 999999)];
-        $input += ['is_active' => 0];
-        $input += ['user_type' => 'user'];
-        $user = User::create($input);
-        $success['token'] =  $user->createToken('MyApp')->accessToken;
-        $success['user'] =  $user;
-
-        return $this->sendResponse($success, 'User Registered Successfully.');
     }
 
     public function registerupdate(Request $req)
@@ -88,17 +110,24 @@ class ApiController extends Controller
         }
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')->accessToken;
-            // $success['email'] =  $user->email;
-            $success['user'] =  $user;
-            return $this->sendResponse($success, 'User Login Successfully.');
-        } else {
-            return $this->sendResponse('Unauthorised.', ['error' => 'Email or Password Incorrect']);
-            // return $this->sendError('Unauthorised.', ['error' => 'Incorrect ID Password']);
+        try {
+            //Verify credentials
+            if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                throw new \Exception('Invalid Credentials!');
+            }
+            //Check user type
+            if (Auth::user()->user_type != 'user') {
+                throw new \Exception('Invalid user type');
+            }
+            //Check if user is verified
+            if (Auth::user()->is_active == 0) {
+                throw new \Exception('Please verify your account');
+            }
+            return $this->sendResponse(new LoginUserResource(Auth::user()), 'User logged in successfully!');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
         }
     }
 
@@ -143,51 +172,6 @@ class ApiController extends Controller
         }
     }
 
-    public function phoneotp(Request $req)
-    {
-        $otp = User::where('id', $req->user_id)->where('otp', $req->otp)->first();
-        if (!empty($otp)) {
-            User::where('id', $req->user_id)->update(['is_active' => 1]);
-            return response()->json(['success' => true, 'msg' => 'Success']);
-        }
-        return response()->json(['success' => false, 'msg' => 'Please Enter Valid Otp Code']);
-    }
-
-    public function generateotp(Request $req)
-    {
-        $otp = rand(1000, 9999);
-        $user = User::where('id', $req->user_id)->update(['otp' => $otp, 'phone' => $req->phone]);
-        return response()->json(['success' => true, 'msg' => 'OTP Genrated', 'data' => $otp]);
-    }
-
-    public function searchUser(Request $req)
-    {
-        $input = $req->all();
-        $ser = $input['search'];
-        $search = User::where('first_name', 'LIKE', "%$ser%")->orWhere('last_name', 'LIKE', "%$ser%")->get();
-        // $search = DB::select("SELECT * FROM users WHERE first_name LIKE '" . $input['search'] . "%' OR last_name LIKE  '" . $input['search'] . "%' ");
-        // dd($search);
-        return $search;
-    }
-
-    public function search(Request $req)
-    {
-        $input = $req->all();
-        $ser = $input['search'];
-
-        $rentalResults = Rentals::with('Images')->where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
-        $tourResults = Tours::with('Images')->where('title', 'LIKE', "%$ser%")->orWhere('desc', 'LIKE', "%$ser%")->get();
-
-        // $searchResults['rentals'] = $rentalResults;
-        // $searchResults['tours'] = $tourResults;
-
-        $searchResults = [
-            'search' => array_merge($rentalResults->toArray(), $tourResults->toArray()),
-        ];
-
-        return response()->json(['success' => true, 'data' => $searchResults]);
-    }
-
     public function fcmid(Request $request)
     {
         try {
@@ -198,7 +182,7 @@ class ApiController extends Controller
             $user->fcm_id = $request->fcm_id;
             $user->save();
             return $this->sendResponse([], 'FCM ID Updated!');
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
     }

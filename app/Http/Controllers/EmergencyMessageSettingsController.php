@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\EmergencyMessageSchedulesResource;
 use App\Http\Resources\EmergencyMessageSettingsResource;
-use App\Http\Resources\EmergencyMessageTemplatesResource;
 use App\Models\EmergencyMessageSchedules;
 use App\Models\EmergencySettings;
 use Carbon\Carbon;
