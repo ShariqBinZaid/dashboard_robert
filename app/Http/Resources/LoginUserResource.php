@@ -17,11 +17,15 @@ class LoginUserResource extends JsonResource
         $user = Auth::user();
         $token = $user->createToken('MyApp')->accessToken;
         return [
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'dob' => $this->dob,
-            'display_picture' => $this->display_picture,
+            'user_details' => [
+                'name' => $this->name,
+                'email' => $this->email,
+                'phone' => $this->phone,
+                'gender' => $this->gender,
+                'loc' => $this->loc,
+                'dob' => $this->dob,
+                'display_picture' => env('APP_URL').'/storage/'.$this->display_picture
+            ],
             'token' => $token
         ];
     }

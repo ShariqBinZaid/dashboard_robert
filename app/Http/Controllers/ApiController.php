@@ -66,7 +66,7 @@ class ApiController extends Controller
             $user->save();
             $token = $user->createToken('MyApp')->accessToken;
             Auth::login($user);
-            return $this->sendResponse(['token' => $token], 'User verified successfully!');
+            return $this->sendResponse(new LoginUserResource(Auth::user()), 'User verified successfully!');
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
