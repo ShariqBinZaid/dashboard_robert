@@ -17,7 +17,7 @@ class LoginUserResource extends JsonResource
         $user = Auth::user();
         $token = $user->createToken('MyApp')->accessToken;
         return [
-            'user_details' => [
+            'user' => [
                 'name' => $this->name,
                 'email' => $this->email,
                 'phone' => $this->phone,
