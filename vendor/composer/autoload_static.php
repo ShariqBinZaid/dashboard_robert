@@ -669,6 +669,7 @@ class ComposerStaticInita03f274ec08755f5b252f87f7381ed0c
         'App\\Http\\Resources\\EmergencyMessageSchedulesResource' => __DIR__ . '/../..' . '/app/Http/Resources/EmergencyMessageSchedulesResource.php',
         'App\\Http\\Resources\\EmergencyMessageSettingsResource' => __DIR__ . '/../..' . '/app/Http/Resources/EmergencyMessageSettingsResource.php',
         'App\\Http\\Resources\\EmergencyMessageTemplatesResource' => __DIR__ . '/../..' . '/app/Http/Resources/EmergencyMessageTemplatesResource.php',
+        'App\\Http\\Resources\\FakeCallSettingsResource' => __DIR__ . '/../..' . '/app/Http/Resources/FakeCallSettingsResource.php',
         'App\\Http\\Resources\\FakeTextSettingsResource' => __DIR__ . '/../..' . '/app/Http/Resources/FakeTextSettingsResource.php',
         'App\\Http\\Resources\\LoginUserResource' => __DIR__ . '/../..' . '/app/Http/Resources/LoginUserResource.php',
         'App\\Http\\Resources\\ModuleResource' => __DIR__ . '/../..' . '/app/Http/Resources/ModuleResource.php',

@@ -58,6 +58,7 @@ return array(
     'App\\Http\\Resources\\EmergencyMessageSchedulesResource' => $baseDir . '/app/Http/Resources/EmergencyMessageSchedulesResource.php',
     'App\\Http\\Resources\\EmergencyMessageSettingsResource' => $baseDir . '/app/Http/Resources/EmergencyMessageSettingsResource.php',
     'App\\Http\\Resources\\EmergencyMessageTemplatesResource' => $baseDir . '/app/Http/Resources/EmergencyMessageTemplatesResource.php',
+    'App\\Http\\Resources\\FakeCallSettingsResource' => $baseDir . '/app/Http/Resources/FakeCallSettingsResource.php',
     'App\\Http\\Resources\\FakeTextSettingsResource' => $baseDir . '/app/Http/Resources/FakeTextSettingsResource.php',
     'App\\Http\\Resources\\LoginUserResource' => $baseDir . '/app/Http/Resources/LoginUserResource.php',
     'App\\Http\\Resources\\ModuleResource' => $baseDir . '/app/Http/Resources/ModuleResource.php',

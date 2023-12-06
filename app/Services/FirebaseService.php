@@ -11,7 +11,7 @@ class FirebaseService
     public function sendNotification($title, $message)
     {
         try {
-            $serverKey = 'AAAACoDQsOk:APA91bHAHZRoItnZKVnkL1AIwut46-Ok0Vfj2lxWkWp3GOklzGWX_78bX-OJpTHdfhDF32phCtXNBf7ka9e5KDHisR2ZSJQixv45p2XgatY3frFJtduHXwrg8CEjGgUJ43wV7sUfMkWG'; // Replace with your Firebase Server Key
+            $serverKey = 'AAAAzaKIuak:APA91bG-EMUlN1qmjx8SV8kEwBRbUvtkRau0tFRB06K442Ofs3IjG5AJJHpjpYhlrV6kEWfboE1NjjmxQrYOhNnYM18oeltlRa1UIngiUmO5sJ6njTwLM-vyFoz2dnbUo0BqeqN5JgJ3'; // Replace with your Firebase Server Key
             $fcmToken = Auth::user()->fcm_id; // Replace with the recipient's FCM token
 
             $client = new Client();

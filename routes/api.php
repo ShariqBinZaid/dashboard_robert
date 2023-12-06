@@ -35,6 +35,8 @@ Route::middleware('auth:api')->group(function () {
         Route::post('registerupdate', 'registerupdate')->name('user.registerupdate');
         Route::post('registerdelete/{id}', 'registerdelete')->name('user.registerdelete');
         Route::post('user/update/fcm', 'fcmid');
+        Route::post('user/location/update', 'updateUserLocation');
+
     });
 
     Route::controller(CategoriesController::class)->group(function () {

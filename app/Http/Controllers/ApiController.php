@@ -189,4 +189,23 @@ class ApiController extends Controller
             return $this->sendError($e->getMessage());
         }
     }
+
+    public function updateUserLocation(Request $request)
+    {
+        try {
+            $request->validate([
+                'location' => 'required',
+                'lat' => 'required',
+                'lng' => 'required',
+            ]);
+            $user = Auth::user();
+            $user->location = $request->location;
+            $user->lat = $request->lat;
+            $user->lng = $request->lng;
+            $user->save();
+            return $this->sendResponse([], 'User location updated successfully!');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
 }
