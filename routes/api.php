@@ -90,6 +90,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('emergency/settings/update', 'update');
         Route::get('emergency/settings/details', 'details');
         Route::post('emergency/settings/add/schedule', 'addSchedule');
+        Route::post('emergency/settings/delete/schedule', 'deleteSchedule');
         Route::get('emergency/settings/toggle/schedule/{id}', 'toggleRepeatSchedule');
         Route::get('emergency/settings/toggle', 'toggleService');
     });

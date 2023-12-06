@@ -10,52 +10,28 @@ use Illuminate\Support\Facades\Validator;
 
 class FakeCallSettingsController extends Controller
 {
-    public function store(Request $req)
+    public function update(Request $request)
     {
-        try {
-            $input = $req->all();
-
-            $validator = Validator::make($input, [
+        try{
+            $request->validate([
                 'name' => 'required',
-                'phone' => 'required',
-                'time' => 'required',
+                'phone' => 'required'
             ]);
-
-            // dd($input);
-            if ($validator->fails()) {
-                return response()->json(['success' => false, 'error' => $validator->errors()]);
-            }
-
-            unset($input['_token']);
-            $input += ['user_id' => Auth::user()->id];
-
-            if (@$input['id']) {
-                $fakecall = FakeCallSettings::where("id", $input['id'])->update($input);
-                $fakecalllog = FakeCallSettingsLogs::where("id", $input['id'])->updated([
-                    'fake_call_settings_id' => $fakecall->id,
-                    'name' => $input['name'],
-                    'phone' => $input['phone'],
-                    'time' => $input['time'],
-                ]);
-                return response()->json(['success' => true, 'msg' => 'Fake Call Settings Updated Successfully.']);
+            //get fake text settings
+            $settings = FakeCallSettings::where('user_id', Auth::id())->first();
+            if ($settings) {
+                $settings->name = $request->name;
+                $settings->phone = $request->phone;
+                $settings->save();
             } else {
-                $fakecall = FakeCallSettings::create($input);
-                $fakecalllog = FakeCallSettingsLogs::create([
-                    'fake_call_settings_id' => $fakecall->id,
-                    'name' => $input['name'],
-                    'phone' => $input['phone'],
-                    'time' => $input['time'],
-                ]);
-                return response()->json(['success' => true, 'msg' => 'Fake Call Settings Created Successfully', 'data' => FakeCallSettings::with('User')->where('id', $fakecall->id)->get()]);
+                $settings = new FakeCallSettings();
+                $settings->user_id = Auth::id();
+                $settings->name = $request->name;
+                $settings->phone = $request->phone;
+                $settings->save();
             }
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
-    }
-
-    public function getfakecall()
-    {
-        $getfakecall = FakeCallSettings::with('User')->get();
-        return response()->json(['success' => true, 'data' => $getfakecall]);
     }
 }

@@ -92,6 +92,19 @@ class EmergencyMessageSettingsController extends Controller
         }
     }
 
+    public function deleteSchedule(Request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required|numeric'
+            ]);
+            $schedule = EmergencyMessageSchedules::where('id', $request->id)->delete();
+            return $this->sendResponse([], 'Schedule deleted successfully');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
     public function toggleRepeatSchedule($id)
     {
         try {
